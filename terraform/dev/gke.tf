@@ -28,4 +28,24 @@ module "gke" {
       display_name = "Public"
     },
   ]
+
+  remove_default_node_pool = true
+
+  node_pools = [
+    {
+      name               = "default-node-pool"
+      machine_type       = "e2-medium"
+      min_count          = 1
+      max_count          = 10
+      local_ssd_count    = 0
+      disk_size_gb       = 20
+      disk_type          = "pd-standard"
+      image_type         = "COS"
+      auto_repair        = true
+      auto_upgrade       = true
+      service_account    = null
+      preemptible        = true
+      initial_node_count = 1
+    },
+  ]
 }
