@@ -1,0 +1,16 @@
+substitutions:
+  _LOCATION: 'asia-southeast1-a'
+  _GKE_CLUSTER: 'microservices-demo-gke'
+  _K8S_FOLDER: './release/kubernetes-manifests.yaml'
+
+steps:
+  - id: gke_deploy
+    name: 'gcr.io/cloud-builders/gke-deploy'
+    args:
+      - 'run'
+      - '--filename'
+      - $_K8S_FOLDER
+      - '--location'
+      - $_LOCATION
+      - '--cluster'
+      - $_GKE_CLUSTER
