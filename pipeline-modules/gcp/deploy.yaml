@@ -1,0 +1,33 @@
+provisioner: "gcp"
+name: "deploy"
+version: 1
+revision: 1
+displayName: "Deploy"
+description: "Deploy application via Skaffold"
+target: ""
+keywords: ["deploy", "skaffold"]
+author: "CloudCover"
+inputs:
+  - name: "gke_cluster_zone"
+    displayName: "GKE Cluster Zone"
+    description: "Location of GKE"
+    type: "string"
+    regexp: ".+"
+    required: true
+  - name: "gke_cluster_name"
+    displayName: "GKE Cluster Name"
+    description: "Name of the GKE Cluster"
+    type: "string"
+    regexp: ".+"
+    required: true
+template: |
+  steps:
+  - id: 'Deploy application to cluster'
+    name: 'gcr.io/k8s-skaffold/skaffold:v0.20.0'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - >
+      gcloud container clusters get-credentials --zone={{ gke_cluster_zone }} {{ gke_cluster_name }};
+      skaffold run -f=skaffold.yaml --default-repo=gcr.io/$PROJECT_ID;
+
