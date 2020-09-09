@@ -1,0 +1,39 @@
+environments:
+  - name: Dev
+    provisioner: gcp
+    iacPolicy: "CC default latest"
+    iacRoot: "terraform/dev"
+
+pipelines:
+  skaffold-deploy:
+    - pipeline-config@1
+    - git-clone@1
+    - gke-skaffold@1
+
+applications:
+  msdemo:
+    displayName: "Online Boutique"
+    srcRoot: "."
+    pipeline: skaffold-deploy
+
+deployments:
+  dev:
+    endpoints:
+      - msdemo
+    environment:
+      name: Dev
+      inputs:
+        region: asia-southeast1
+        zone: asia-southeast1-a
+        project_id: vanguard-test-deploy
+        gke_name: msdemo_online_boutique
+    applications:
+      msdemo:
+        pipelineInputs:
+          git_local_path: microservices-demo
+          git_remote_path: github.com/cldcvr/microservices-demo
+          gke_cluster_name: msdemo_online_boutique
+          gke_cluster_zone: asia-southeast1-a
+    output:
+      frontend-endpoint:
+        command: kubectl get --no-headers -o custom-columns=EXTERNAL-IP:.status.loadBalancer.ingress[0].ip service frontend-external
