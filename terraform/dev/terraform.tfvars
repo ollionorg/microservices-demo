@@ -1,8 +1,3 @@
-## Project
-project_id = "cloudcover-sandbox"
-region     = "asia-southeast1"
-zone       = "asia-southeast1-a"
-
 ## Network
 network_name = "microservice-demo"
 
