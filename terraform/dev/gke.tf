@@ -2,14 +2,14 @@ module "gke" {
   source     = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
   project_id = var.project_id
 
-  name = var.gke_name
+  name = "${var.gke_name}-${local.random_id}"
 
   regional = false
   region   = var.region
   zones    = [var.zone]
 
-  network    = module.vpc.network_name
-  subnetwork = module.vpc.subnets["${var.region}/${var.gke_subnet_name}"].name
+  network    = google_compute_network.network.name
+  subnetwork = google_compute_subnetwork.gke.name
 
   ip_range_pods     = "secondary-range-pods"
   ip_range_services = "secondary-range-services"
