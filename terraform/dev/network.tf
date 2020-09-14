@@ -1,32 +1,33 @@
-module "vpc" {
-  source  = "terraform-google-modules/network/google"
-  version = "~> 2.5"
+resource "google_compute_network" "network" {
+  project = var.project_id
 
-  project_id   = var.project_id
-  network_name = var.network_name
-  routing_mode = "GLOBAL"
+  name                    = "${var.network_name}-${local.random_id}"
+  auto_create_subnetworks = "false"
+  routing_mode            = "REGIONAL"
+}
 
-  subnets = [
-    {
-      subnet_name           = var.gke_subnet_name
-      subnet_ip             = var.gke_subnet_cidr_range
-      subnet_region         = var.region
-      subnet_private_access = "true"
-      subnet_flow_logs      = "true"
-      description           = "Gke subnet for microservices demo"
-    },
-  ]
+resource "google_compute_subnetwork" "gke" {
+  project = var.project_id
+  region  = var.region
 
-  secondary_ranges = {
-    "${var.gke_subnet_name}" = [
-      {
-        range_name    = "secondary-range-pods"
-        ip_cidr_range = var.gke_subnet_cidr_range_pod
-      },
-      {
-        range_name    = "secondary-range-services"
-        ip_cidr_range = var.gke_subnet_cidr_range_services
-      },
-    ]
+  name                     = "${var.gke_subnet_name}-${local.random_id}"
+  network                  = google_compute_network.network.id
+  ip_cidr_range            = var.gke_subnet_cidr_range
+  private_ip_google_access = true
+
+  log_config {
+    aggregation_interval = "INTERVAL_10_MIN"
+    flow_sampling        = 0.5
+    metadata             = "INCLUDE_ALL_METADATA"
+  }
+
+  secondary_ip_range {
+    range_name    = "secondary-range-pods"
+    ip_cidr_range = var.gke_subnet_cidr_range_pod
+  }
+
+  secondary_ip_range {
+    range_name    = "secondary-range-services"
+    ip_cidr_range = var.gke_subnet_cidr_range_services
   }
 }
