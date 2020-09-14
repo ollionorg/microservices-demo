@@ -30,10 +30,11 @@ deployments:
     applications:
       msdemo:
         pipelineInputs:
-          git_local_path: microservices-demo
+          git_local_path: workspace
           git_remote_path: github.com/cldcvr/microservices-demo
-          gke_cluster_name: msdemo_online_boutique
+          gke_cluster_name: "$$CLUSTER_NAME"
           gke_cluster_zone: asia-southeast1-a
+          pipeline_env: '{"CLUSTER_NAME":"${terraform.gke.value.name}"}'
     output:
       frontend-endpoint:
         command: kubectl get --no-headers -o custom-columns=EXTERNAL-IP:.status.loadBalancer.ingress[0].ip service frontend-external
