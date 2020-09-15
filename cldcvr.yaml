@@ -34,6 +34,9 @@ deployments:
           gke_cluster_name: "$$CLUSTER_NAME"
           gke_cluster_zone: asia-southeast1-a
           pipeline_env: '{"CLUSTER_NAME":"${terraform.gke.value.name}"}'
+          pipeline_timeout_sec: "4000"
+          pipeline_machine_type: "N1_HIGHCPU_32"
+          pipeline_disk_size_gb: "300"
     output:
       frontend-endpoint:
         command: kubectl get --no-headers -o custom-columns=EXTERNAL-IP:.status.loadBalancer.ingress[0].ip service frontend-external
