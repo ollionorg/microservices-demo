@@ -30,7 +30,6 @@ deployments:
     applications:
       msdemo:
         pipelineInputs:
-          git_local_path: workspace
           git_remote_path: github.com/cldcvr/microservices-demo
           gke_cluster_name: "$$CLUSTER_NAME"
           gke_cluster_zone: asia-southeast1-a
