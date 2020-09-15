@@ -35,7 +35,7 @@ module "gke" {
     {
       name               = "default-node-pool"
       machine_type       = "e2-standard-2"
-      min_count          = 1
+      min_count          = 3
       max_count          = 10
       local_ssd_count    = 0
       disk_size_gb       = 20
@@ -45,7 +45,7 @@ module "gke" {
       auto_upgrade       = true
       service_account    = null
       preemptible        = true
-      initial_node_count = 1
+      initial_node_count = 3
     },
   ]
 }
