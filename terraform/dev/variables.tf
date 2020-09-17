@@ -1,4 +1,4 @@
-variable "project_id" {
+variable "GOOGLE_PROJECT" {
   description = "Project id"
   type        = string
 }
