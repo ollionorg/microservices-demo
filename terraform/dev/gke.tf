@@ -1,6 +1,6 @@
 module "gke" {
   source     = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
-  project_id = var.project_id
+  project_id = var.GOOGLE_PROJECT
 
   name = "${var.gke_name}-${local.random_id}"
 

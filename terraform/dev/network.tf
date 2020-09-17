@@ -1,5 +1,5 @@
 resource "google_compute_network" "network" {
-  project = var.project_id
+  project = var.GOOGLE_PROJECT
 
   name                    = "${var.network_name}-${local.random_id}"
   auto_create_subnetworks = "false"
@@ -7,7 +7,7 @@ resource "google_compute_network" "network" {
 }
 
 resource "google_compute_subnetwork" "gke" {
-  project = var.project_id
+  project = var.GOOGLE_PROJECT
   region  = var.region
 
   name                     = "${var.gke_subnet_name}-${local.random_id}"

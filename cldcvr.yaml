@@ -25,7 +25,6 @@ deployments:
       inputs:
         region: asia-southeast1
         zone: asia-southeast1-a
-        project_id: vanguard-test-deploy
         gke_name: msdemo_online_boutique
     applications:
       msdemo:
