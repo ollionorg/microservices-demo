@@ -3,13 +3,8 @@ variable "GOOGLE_PROJECT" {
   type        = string
 }
 
-variable "region" {
+variable "GOOGLE_REGION" {
   description = "Project region"
-  type        = string
-}
-
-variable "zone" {
-  description = "Project zone"
   type        = string
 }
 

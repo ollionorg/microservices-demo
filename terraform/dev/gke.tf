@@ -4,9 +4,8 @@ module "gke" {
 
   name = "${var.gke_name}-${local.random_id}"
 
-  regional = false
-  region   = var.region
-  zones    = [var.zone]
+  regional = true
+  region   = var.GOOGLE_REGION
 
   network    = google_compute_network.network.name
   subnetwork = google_compute_subnetwork.gke.name
@@ -19,6 +18,8 @@ module "gke" {
 
   enable_private_endpoint = false
   enable_private_nodes    = true
+
+  default_max_pods_per_node = 20
 
   master_ipv4_cidr_block = var.gke_cidr_range_master
 

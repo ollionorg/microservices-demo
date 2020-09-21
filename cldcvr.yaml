@@ -23,15 +23,13 @@ deployments:
     environment:
       name: Dev
       inputs:
-        region: asia-southeast1
-        zone: asia-southeast1-a
         gke_name: msdemo_online_boutique
     applications:
       msdemo:
         pipelineInputs:
           git_remote_path: github.com/cldcvr/microservices-demo
           gke_cluster_name: "$$CLUSTER_NAME"
-          gke_cluster_zone: asia-southeast1-a
+          gke_cluster_region: "$$GOOGLE_REGION"
           pipeline_env: '{"CLUSTER_NAME":"${terraform.gke.value.name}"}'
           pipeline_timeout_sec: "4000"
           pipeline_machine_type: "N1_HIGHCPU_32"
