@@ -10,3 +10,13 @@ gke_subnet_cidr_range_services = "192.168.4.0/22"
 ### Config
 gke_name              = "microservices-demo-gke"
 gke_cidr_range_master = "172.16.0.0/28"
+
+## Google Services
+services = [
+  "cloudbuild.googleapis.com",
+  "compute.googleapis.com",
+  "container.googleapis.com",
+  "logging.googleapis.com",
+  "monitoring.googleapis.com"
+]
+

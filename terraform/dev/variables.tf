@@ -43,3 +43,9 @@ variable "gke_name" {
   type        = string
 }
 
+variable "services" {
+  description = "List of google services api to enable"
+  type        = list(string)
+  default     = []
+}
+
