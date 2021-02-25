@@ -1,7 +1,7 @@
 environments:
   - name: Dev
     provisioner: gcp
-    iacPolicy: "CC default latest"
+    iacPolicy: "CC Best Practice"
     iacRoot: "terraform/dev"
 
 pipelines:
